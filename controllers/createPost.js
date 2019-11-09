@@ -1,3 +1,6 @@
 module.exports = (req, res) => {
-  res.render("newPost");
+  if (req.session.userID) {
+    return res.render("newPost");
+  }
+  res.redirect("/");
 };
