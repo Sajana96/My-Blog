@@ -10,12 +10,15 @@ module.exports = (req, res) => {
         if (same) {
           console.log("passwords matched");
           req.session.userID = user._id;
+          req.session.username = user.username;
           res.redirect("/");
         } else {
           const enable = "block";
           const errMsgLogin = "Error Username or Password";
+          const loginData = req.body;
           req.flash("enable", enable);
           req.flash("errMsgLogin", errMsgLogin);
+          req.flash("loginData", loginData);
           console.log("passwords is not correct");
           res.redirect("/");
         }

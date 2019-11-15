@@ -1,6 +1,7 @@
 const path = require("path");
 const expressEdge = require("express-edge");
 const express = require("express");
+const edge = require("edge.js");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const Post = require("./database/models/Post");
@@ -18,9 +19,11 @@ const registerUserController = require("./controllers/registerUser");
 const storePostController = require("./controllers/storePost");
 const storeUserController = require("./controllers/storeUser");
 const loginUserController = require("./controllers/loginUser");
+const logoutUserController = require("./controllers/logoutController");
 
 const authMiddleware = require("./middleware/auth");
 const storePostMiddleware = require("./middleware/storePost");
+const redirectIfAuthenticatedMiddleware = require("./middleware/redirectIfAuthenticated");
 
 const app = new express();
 mongoose.connect("mongodb://localhost/node-app-db", { useNewUrlParser: true });
@@ -44,9 +47,18 @@ app.use(expressEdge);
 
 app.set("views", `${__dirname}/views`);
 
+app.use("*", (req, res, next) => {
+  edge.global("auth", req.session.userID);
+  next();
+});
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use("*", (req, res, next) => {
+  edge.global("username", req.session.username);
+  next();
+});
 app.get("/", homePageController);
 
 app.get("/about", aboutUsPageController);
@@ -57,7 +69,11 @@ app.get("/contact", contactUsPageController);
 
 app.get("/posts/new", authMiddleware, createPostController);
 
-app.get("/auth/register", registerUserController);
+app.get(
+  "/auth/register",
+  redirectIfAuthenticatedMiddleware,
+  registerUserController
+);
 
 app.post(
   "/posts/store",
@@ -68,10 +84,22 @@ app.post(
 
 app.post("/users/register", storeUserController);
 
-app.post("/posts/users/login", loginUserController);
-app.post("/auth/users/login", loginUserController);
-app.post("/users/login", loginUserController);
-
+app.post(
+  "/posts/users/login",
+  redirectIfAuthenticatedMiddleware,
+  loginUserController
+);
+app.post(
+  "/auth/users/login",
+  redirectIfAuthenticatedMiddleware,
+  loginUserController
+);
+app.post(
+  "/users/login",
+  redirectIfAuthenticatedMiddleware,
+  loginUserController
+);
+app.get("/auth/logout", logoutUserController);
 app.listen(4000, () => {
   console.log("app listens to port 4000");
 });

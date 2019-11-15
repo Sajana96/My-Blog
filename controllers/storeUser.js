@@ -12,6 +12,8 @@ module.exports = (req, res) => {
         return res.redirect("/auth/register");
       }
       console.log(error);
+      const userExistError = "Cannot Register User";
+      req.flash("userExistError", userExistError);
       return res.redirect("/auth/register");
     }
     res.redirect("/");

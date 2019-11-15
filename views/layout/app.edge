@@ -69,6 +69,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/contact">Contact</a>
             </li>
+            @if(!auth)
             <li class="nav-item">
               <a class="nav-link" href="/auth/register">New User</a>
             </li>
@@ -81,6 +82,18 @@
                 Login
               </a>
             </li>
+            @else
+            <li class="nav-item">
+              <a class="nav-link" href="/auth/logout">Logout</a>
+            </li>
+            <li
+              class="nav-item"
+              style="color: aliceblue; font-weight: bolder; font-size: larger;"
+            >
+              Hello
+              {{ username }}
+            </li>
+            @endif
           </ul>
         </div>
       </div>
@@ -106,6 +119,7 @@
             type="email"
             placeholder="Enter Email"
             name="email"
+            value="{{loginData.email || ''}}"
             required
           />
 
@@ -119,14 +133,13 @@
           />
 
           <button type="submit" class="btnlogin">Login</button>
-            <span class="list-group-item text-danger">{{ errMsgLogin || "" }}</span>
+          <span class="list-group-item text-danger">{{errMsgLogin || ""}}</span>
         </div>
 
         <div class="container" style="background-color:#f1f1f1">
           <span class="psw">Forgot <a href="#">password?</a></span>
         </div>
       </form>
-    
     </div>
 
     @!section('content')
