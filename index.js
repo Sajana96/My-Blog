@@ -7,6 +7,7 @@ const Post = require("./database/models/Post");
 const fileUpload = require("express-fileupload");
 const expressSession = require("express-session");
 const connectMongo = require("connect-mongo");
+const connectFlash = require("connect-flash");
 
 const createPostController = require("./controllers/createPost");
 const homePageController = require("./controllers/homePage");
@@ -18,10 +19,13 @@ const storePostController = require("./controllers/storePost");
 const storeUserController = require("./controllers/storeUser");
 const loginUserController = require("./controllers/loginUser");
 
+const authMiddleware = require("./middleware/auth");
 const storePostMiddleware = require("./middleware/storePost");
 
 const app = new express();
 mongoose.connect("mongodb://localhost/node-app-db", { useNewUrlParser: true });
+
+app.use(connectFlash());
 
 const mongoStore = connectMongo(expressSession);
 
@@ -51,12 +55,16 @@ app.get("/post/:id", getPostPageController);
 
 app.get("/contact", contactUsPageController);
 
-app.get("/posts/new", createPostController);
+app.get("/posts/new", authMiddleware, createPostController);
 
 app.get("/auth/register", registerUserController);
 
-app.use("/posts/store/", storePostMiddleware);
-app.post("/posts/store", storePostController);
+app.post(
+  "/posts/store",
+  authMiddleware,
+  storePostMiddleware,
+  storePostController
+);
 
 app.post("/users/register", storeUserController);
 

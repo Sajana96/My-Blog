@@ -73,7 +73,12 @@
           </button>
         </div>
       </form>
-      <span>{{error.errmsg}}<span>
+      @if(errors.length>0)
+        @each(error in errors)
+        <li class="list-group-item text-danger">{{error}}</li>
+        @endeach
+        @endif
+        
     </div>
   </div>
 </div>

@@ -73,10 +73,10 @@
               <a class="nav-link" href="/auth/register">New User</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link"
+              <a
+                class="nav-link"
                 onclick="document.getElementById('id01').style.display='block'"
                 style="cursor: pointer;"
-                
               >
                 Login
               </a>
@@ -85,12 +85,8 @@
         </div>
       </div>
     </nav>
-    <div id="id01" class="modal">
-      <form
-        class="modal-content animate"
-        action="users/login"
-        method="post"
-      >
+    <div id="id01" class="modal" style="display:{{enable || 'none'}}">
+      <form class="modal-content animate" action="users/login" method="post">
         <div class="imgcontainer">
           <span
             onclick="document.getElementById('id01').style.display='none'"
@@ -98,7 +94,9 @@
             title="Close Modal"
             >&times;</span
           >
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFjUMXMCOEDg5AK5FhOpod-WCVhc0DfsJse7twfHHKp4WNG6ak&s" />
+          <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFjUMXMCOEDg5AK5FhOpod-WCVhc0DfsJse7twfHHKp4WNG6ak&s"
+          />
         </div>
 
         <div class="container">
@@ -112,7 +110,8 @@
           />
 
           <label for="psw"><b>Password</b></label>
-          <input class="login"
+          <input
+            class="login"
             type="password"
             placeholder="Enter Password"
             name="password"
@@ -120,14 +119,14 @@
           />
 
           <button type="submit" class="btnlogin">Login</button>
-         
+            <span class="list-group-item text-danger">{{ errMsgLogin || "" }}</span>
         </div>
 
         <div class="container" style="background-color:#f1f1f1">
-          
           <span class="psw">Forgot <a href="#">password?</a></span>
         </div>
       </form>
+    
     </div>
 
     @!section('content')

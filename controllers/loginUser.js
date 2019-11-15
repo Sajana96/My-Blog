@@ -12,8 +12,12 @@ module.exports = (req, res) => {
           req.session.userID = user._id;
           res.redirect("/");
         } else {
+          const enable = "block";
+          const errMsgLogin = "Error Username or Password";
+          req.flash("enable", enable);
+          req.flash("errMsgLogin", errMsgLogin);
           console.log("passwords is not correct");
-          res.redirect("back");
+          res.redirect("/");
         }
       });
     } else {
