@@ -99,7 +99,10 @@ app.post(
   redirectIfAuthenticatedMiddleware,
   loginUserController
 );
-app.get("/auth/logout", logoutUserController);
+app.get("/auth/logout", authMiddleware, logoutUserController);
+
+app.use((req, res) => res.render("not-found"));
+
 app.listen(4000, () => {
   console.log("app listens to port 4000");
 });
