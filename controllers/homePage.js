@@ -1,7 +1,7 @@
 const Post = require("../database/models/Post");
 
 module.exports = async (req, res) => {
-  const posts = await Post.find({});
+  const posts = await Post.find({}).populate("author");
   //console.log(posts);
   //console.log(req.flash("enable")[0]);
   //console.log(req.flash("loginData")[0]);

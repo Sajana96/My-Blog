@@ -8,7 +8,7 @@ module.exports = (req, res) => {
     Post.create(
       {
         ...req.body,
-        username: req.session.username,
+        author: req.session.userID,
         image: `/posts/${image.name}`
       },
       (error, post) => {
