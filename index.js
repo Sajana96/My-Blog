@@ -27,7 +27,11 @@ const storePostMiddleware = require("./middleware/storePost");
 const redirectIfAuthenticatedMiddleware = require("./middleware/redirectIfAuthenticated");
 
 const app = new express();
-mongoose.connect("mongodb://localhost/node-app-db", { useNewUrlParser: true });
+//mongoose.connect("mongodb://localhost/node-app-db", { useNewUrlParser: true });
+mongoose.connect(
+  "mongodb+srv://sajana96:saj2632210@myblog-sdcem.mongodb.net/blog-db?retryWrites=true&w=majority",
+  { useNewUrlParser: true }
+);
 
 app.use(connectFlash());
 
