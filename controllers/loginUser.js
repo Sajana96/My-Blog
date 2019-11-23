@@ -24,6 +24,10 @@ module.exports = (req, res) => {
         }
       });
     } else {
+      const enable = "block";
+      const errMsgNoUser = "Sign Up First";
+      req.flash("errMsgNouser", errMsgNoUser);
+      req.flash("enable", enable);
       console.log("No user");
       return res.redirect("/");
     }

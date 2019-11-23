@@ -27,11 +27,11 @@ const storePostMiddleware = require("./middleware/storePost");
 const redirectIfAuthenticatedMiddleware = require("./middleware/redirectIfAuthenticated");
 
 const app = new express();
-//mongoose.connect("mongodb://localhost/node-app-db", { useNewUrlParser: true });
-mongoose.connect(
+mongoose.connect("mongodb://localhost/node-app-db", { useNewUrlParser: true });
+/*mongoose.connect(
   "mongodb+srv://sajana96:saj2632210@myblog-sdcem.mongodb.net/blog-db?retryWrites=true&w=majority",
   { useNewUrlParser: true }
-);
+);*/
 
 app.use(connectFlash());
 
@@ -61,7 +61,7 @@ app.set("views", `${__dirname}/views`);
 app.use("*", (req, res, next) => {
   edge.global("auth", req.session.userID);
   next();
-});
+}); // this is to initialize an auth variable with session ID to customize the template enging if(auth){}
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -69,7 +69,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use("*", (req, res, next) => {
   edge.global("username", req.session.username);
   next();
-});
+}); //this is used when you want to send a gllobal variable called username available in all the routes
+
 app.get("/", homePageController);
 
 app.get("/about", aboutUsPageController);

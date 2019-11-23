@@ -10,6 +10,7 @@ module.exports = async (req, res) => {
     posts,
     enable: req.flash("enable")[0],
     errMsgLogin: req.flash("errMsgLogin")[0],
-    loginData: req.flash("loginData")[0]
+    loginData: req.flash("loginData")[0],
+    errMsgNoUser: req.flash("errMsgNouser")[0]
   });
 };

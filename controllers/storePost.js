@@ -3,7 +3,9 @@ const path = require("path");
 const cloudinary = require("cloudinary");
 
 module.exports = (req, res) => {
+  console.log("came to stor post contrller");
   const { image } = req.files;
+  console.log(image);
   const uploadPath = path.resolve(__dirname, "..", "public/posts", image.name);
   const { username, title, description, content } = req.body;
   image.mv(uploadPath, error => {

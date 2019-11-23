@@ -113,7 +113,12 @@
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFjUMXMCOEDg5AK5FhOpod-WCVhc0DfsJse7twfHHKp4WNG6ak&s"
           />
         </div>
-
+        @if(errMsgLogin)
+        <span class="list-group-item text-danger">{{errMsgLogin || ''}}</span>
+        @endif
+         @if(errMsgNoUser)
+        <span class="list-group-item text-danger">{{errMsgNoUser || ''}}</span>
+        @endif
         <div class="container">
           <label for="email"><b>Email</b></label>
           <input
@@ -135,7 +140,7 @@
           />
 
           <button type="submit" class="btnlogin">Login</button>
-          <span class="list-group-item text-danger">{{errMsgLogin || ''}}</span>
+          
         </div>
 
         <div class="container" style="background-color:#f1f1f1">
