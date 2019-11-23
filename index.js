@@ -2,6 +2,7 @@ const path = require("path");
 const expressEdge = require("express-edge");
 const express = require("express");
 const edge = require("edge.js");
+const cloudinary = require("cloudinary");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const Post = require("./database/models/Post");
@@ -29,6 +30,12 @@ const app = new express();
 mongoose.connect("mongodb://localhost/node-app-db", { useNewUrlParser: true });
 
 app.use(connectFlash());
+
+cloudinary.config({
+  api_key: "561731371536788",
+  api_secret: "ZLmfYG6fMRaFCtpFhoq0pwqbRyQ",
+  cloud_name: "sajana96"
+});
 
 const mongoStore = connectMongo(expressSession);
 
